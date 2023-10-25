@@ -7,7 +7,7 @@ const professionalRegister = async (req, res) => {
     const {
       name,
       lastName,
-      userName,
+      username,
       email,
       province,
       location,
@@ -23,11 +23,11 @@ const professionalRegister = async (req, res) => {
 
     // Busca si hay un Usuario ya registrado con ese nombre
     const professionalFound = await Professional.findOne({
-      $or: [{ email: email }, { userName: userName }],
+      $or: [{ email: email }, { username: username }],
     });
 
     const clientFound = await Client.findOne({
-      $or: [{ email: email }, { userName: userName }],
+      $or: [{ email: email }, { username: username }],
     });
 
     if (professionalFound || clientFound) {
@@ -37,7 +37,7 @@ const professionalRegister = async (req, res) => {
     const newProfessional = new Professional({
       name,
       lastName,
-      userName,
+      username,
       email,
       image: result.secure_url,
       password,
