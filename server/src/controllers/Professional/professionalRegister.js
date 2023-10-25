@@ -14,8 +14,7 @@ const professionalRegister = async (req, res) => {
       password,
       profession,
       description,
-      provinceJob,
-      locationJob,
+      workingRange,
       price,
       remoteWork,
     } = req.body;
@@ -46,8 +45,7 @@ const professionalRegister = async (req, res) => {
       location,
       profession,
       description,
-      provinceJob,
-      locationJob,
+      workingRange,
       price,
       remoteWork,
     });
