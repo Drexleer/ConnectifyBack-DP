@@ -46,14 +46,11 @@ const professionalSchema = new mongoose.Schema({
     type: [String],
     required: true,
   },
-
-  workingRange: {
-    provinceJob: {
-      type: [String],
-    },
-    locationJob: {
-      type: [String],
-    },
+  provinceJob: {
+    type: [String],
+  },
+  locationJob: {
+    type: [String],
   },
   remoteWork: {
     type: Boolean,
