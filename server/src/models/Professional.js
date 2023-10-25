@@ -46,6 +46,7 @@ const professionalSchema = new mongoose.Schema({
     type: [String],
     required: true,
   },
+
   workingRange: {
     provinceJob: {
       type: [String],
