@@ -21,7 +21,9 @@ const filtersCombined = async (req, res) => {
       query = query.where({ profession: req.query.profession });
     }
 
-    const ads = await query.exec();
+    const ads = await query
+      .populate('creator') // Esto poblará los datos del profesional
+      .exec();
     res.json(ads);
   } catch (err) {
     res.status(500).json({ error: 'Error al obtener los anuncios' });
