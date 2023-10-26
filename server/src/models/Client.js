@@ -29,15 +29,13 @@ const clientSchema = new mongoose.Schema({
   image: {
     type: String,
   },
-  address: {
-    province: {
-      type: String,
-      required: true,
-    },
-    location: {
-      type: String,
-      required: true,
-    },
+  province: {
+    type: String,
+    required: true,
+  },
+  location: {
+    type: String,
+    required: true,
   },
   isDeleted: {
     // Inicialmente, no se ha borrado lógicamente
