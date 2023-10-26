@@ -10,15 +10,23 @@ const filtersCombined = async (req, res) => {
     }
 
     // Verifica si se especifica la ordenación por precio
-    if (req.query.sort === 'price-asc') {
-      query = query.sort({ rate: 1 });
-    } else if (req.query.sort === 'price-desc') {
-      query = query.sort({ rate: -1 });
-    }
+    // if (req.query.sort === 'price-asc') {
+    //   query = query.sort({ rate: 1 });
+    // } else if (req.query.sort === 'price-desc') {
+    //   query = query.sort({ rate: -1 });
+    // }
 
     // Verifica si se ha especificado una profesión para filtrar
     if (req.query.profession) {
       query = query.where({ profession: req.query.profession });
+    }
+
+    // Filtrar por rango de precios si se especifica
+    if (req.query.minPrice && req.query.maxPrice) {
+      query = query
+        .where('price')
+        .gte(req.query.minPrice)
+        .lte(req.query.maxPrice);
     }
 
     const ads = await query
