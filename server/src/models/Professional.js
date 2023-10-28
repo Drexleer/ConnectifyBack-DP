@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const professionalSchema = new mongoose.Schema({
   name: {
@@ -28,7 +28,6 @@ const professionalSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
   profession: {
     type: [String],
     required: true,
@@ -37,7 +36,6 @@ const professionalSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
   province: {
     type: [String],
     required: true,
@@ -46,18 +44,20 @@ const professionalSchema = new mongoose.Schema({
     type: [String],
     required: true,
   },
+
   provinceJob: {
     type: [String],
   },
   locationJob: {
     type: [String],
   },
+
   remoteWork: {
     type: Boolean,
     required: true,
   },
   isDeleted: {
-    // Inicialmente, no se ha borrado lógicamentenpm install bcrypt
+    // Inicialmente, no se ha borrado lógicamente
     type: Boolean,
     default: false,
   },
@@ -66,38 +66,38 @@ const professionalSchema = new mongoose.Schema({
   },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Professional', // Referencia al usuario creador
+    ref: "Professional", // Referencia al usuario creador
   },
   clientComments: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Comment',
+      ref: "Comment",
     },
   ],
   createdAds: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'NewAd',
+      ref: "NewAd",
     },
   ],
   payments: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Payment',
+      ref: "Payment",
     },
   ],
   purchase: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'purchase',
+      ref: "purchase",
     },
   ],
 });
 
-professionalSchema.pre('save', function (next) {
+professionalSchema.pre("save", function (next) {
   const professional = this;
 
-  if (!professional.isModified('password')) {
+  if (!professional.isModified("password")) {
     return next();
   }
 
@@ -116,4 +116,4 @@ professionalSchema.pre('save', function (next) {
   });
 });
 
-module.exports = mongoose.model('Professional', professionalSchema);
+module.exports = mongoose.model("Professional", professionalSchema);
