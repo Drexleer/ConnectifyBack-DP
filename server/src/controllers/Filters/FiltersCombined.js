@@ -12,7 +12,10 @@ const filtersCombined = async (req, res) => {
     // Verifica si se especifica la ordenación por precio
     if (req.query.minPrice && req.query.maxPrice) {
       query = query.where({
-        rate: { $gte: req.query.minPrice, $lte: req.query.maxPrice },
+        rate: {
+          $gte: parseFloat(req.query.minPrice), // Convierte a número
+          $lte: parseFloat(req.query.maxPrice), // Convierte a número
+        },
       });
     }
 
