@@ -9,10 +9,6 @@ const filtersCombined = async (req, res) => {
       query = query.where({ location: req.query.location });
     }
 
-    if (req.query.province) {
-      query = query.where({ province: req.query.province });
-    }
-
     // Verifica si se ha especificado una profesión para filtrar
     if (req.query.profession) {
       query = query.where({ profession: req.query.profession });
