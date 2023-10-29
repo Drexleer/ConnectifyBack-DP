@@ -9,6 +9,15 @@ const filtersCombined = async (req, res) => {
       query = query.where({ location: req.query.location });
     }
 
+    if (req.query.province) {
+      query = query.where({ province: req.query.province });
+    }
+
+    // Verifica si se ha especificado una profesión para filtrar
+    if (req.query.profession) {
+      query = query.where({ profession: req.query.profession });
+    }
+
     // Verifica si se especifica la ordenación por precio
     if (req.query.minPrice && req.query.maxPrice) {
       query = query.where({
@@ -17,11 +26,6 @@ const filtersCombined = async (req, res) => {
           $lte: req.query.maxPrice, // Convierte a número
         },
       });
-    }
-
-    // Verifica si se ha especificado una profesión para filtrar
-    if (req.query.profession) {
-      query = query.where({ profession: req.query.profession });
     }
 
     const ads = await query
