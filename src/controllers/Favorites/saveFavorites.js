@@ -1,4 +1,4 @@
-const Favorites = require("../../models/Favorites");
+const Favorites = require('../../models/Favorites');
 
 const saveFavorites = async (req, res) => {
   try {
@@ -7,25 +7,32 @@ const saveFavorites = async (req, res) => {
     const existingFavorite = await Favorites.findOne({
       client: clientId,
       professional: professionalId,
-    })
-      .populate("client")
-      .populate("professional")
-      .exec();
-
-    if (existingFavorite) {
-      return res
-        .status(400)
-        .json({ message: "El profesional ya está en Favoritos" });
-    }
-
-    const newFavorite = await Favorites.create({
-      client: clientId,
-      professional: professionalId,
     });
 
-    res.status(201).json(newFavorite);
+    console.log(existingFavorite);
+
+    if (existingFavorite) {
+      return res.status(400).json({
+        message: 'El professional ya esta en favoritos',
+      });
+    }
+
+    await Favorites.create({
+      client: clientId,
+      professional: professionalId,
+      isSave: true,
+    });
+
+    const saveFavorite = await Favorites.find({
+      client: clientId,
+      professional: professionalId,
+    })
+      .populate('professional')
+      .exec();
+
+    res.status(201).json(saveFavorite);
   } catch (error) {
-    res.status(500).json({ error: "Error del servidor" });
+    res.status(500).json({ error: 'Error del servidor' });
   }
 };
 

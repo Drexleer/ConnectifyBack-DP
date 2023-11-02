@@ -1,16 +1,20 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const favoritesSchema = new mongoose.Schema({
   client: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Client",
+    ref: 'Client',
     required: true,
   },
   professional: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Professional",
+    ref: 'Professional',
     required: true,
+  },
+  isSave: {
+    type: Boolean,
+    default: false,
   },
 });
 
-module.exports = mongoose.model("Favorites", favoritesSchema);
+module.exports = mongoose.model('Favorites', favoritesSchema);
