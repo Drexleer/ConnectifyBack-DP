@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const bcrypt = require("bcryptjs");
+const bcrypt = require('bcryptjs');
 
 const adminSchema = mongoose.Schema({
-  username: {
+  userName: {
     type: String,
     required: true,
   },
@@ -15,17 +15,20 @@ const adminSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  types: {
+    type: String,
+    default: 'admin',
+  },
   isAdmin: {
     type: Boolean,
-    default: false,
+    default: true,
   },
-
 });
 
-adminSchema.pre("save", function (next) {
+adminSchema.pre('save', function (next) {
   const admin = this;
 
-  if (!admin.isModified("password")) {
+  if (!admin.isModified('password')) {
     return next();
   }
 
@@ -39,9 +42,9 @@ adminSchema.pre("save", function (next) {
         return next(err);
       }
       admin.password = hash;
-      next();npm
+      next();
     });
   });
 });
 
-module.exports = mongoose.model("Admin", adminSchema);
+module.exports = mongoose.model('Admin', adminSchema);

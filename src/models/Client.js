@@ -1,8 +1,7 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const pasportLocalMongoose = require("passport-local-mongoose");
-const findOrCreate = require("mongoose-findorcreate");
-
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const pasportLocalMongoose = require('passport-local-mongoose');
+const findOrCreate = require('mongoose-findorcreate');
 
 const clientSchema = new mongoose.Schema({
   googleId: {
@@ -14,15 +13,13 @@ const clientSchema = new mongoose.Schema({
   },
   name: {
     type: String,
-   
   },
   lastName: {
     type: String,
-    
   },
   userName: {
     type: String,
-    required: true, 
+    required: true,
     unique: true,
   },
   email: {
@@ -32,21 +29,23 @@ const clientSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    
   },
   image: {
     type: String,
   },
- 
-    province: {
-      type: String,
-      
-    },
-    location: {
-      type: String,
-      
-    },
-  
+
+  province: {
+    type: String,
+  },
+  location: {
+    type: String,
+  },
+
+  types: {
+    type: String,
+    default: 'client',
+  },
+
   isDeleted: {
     // Inicialmente, no se ha borrado lógicamente
     type: Boolean,
@@ -55,29 +54,29 @@ const clientSchema = new mongoose.Schema({
   comments: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment",
+      ref: 'Comment',
     },
   ],
   payments: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Payment",
+      ref: 'Payment',
     },
   ],
   purchase: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "purchase",
+      ref: 'purchase',
     },
   ],
 });
 
 // Middleware para hashear la contraseña antes de guardar
-clientSchema.pre("save", async function (next) {
+clientSchema.pre('save', async function (next) {
   const client = this;
 
   // Solo hashear la contraseña si es nueva o ha sido modificada
-  if (!client.isModified("password")) {
+  if (!client.isModified('password')) {
     return next();
   }
 
@@ -85,7 +84,7 @@ clientSchema.pre("save", async function (next) {
     client.password = await bcrypt.hash(client.password, 10);
     next();
   } catch (error) {
-    return next("Error CLient.js...", error);
+    return next('Error CLient.js...', error);
   }
 });
 
@@ -93,6 +92,4 @@ clientSchema.plugin(pasportLocalMongoose);
 
 clientSchema.plugin(findOrCreate);
 
-module.exports = mongoose.model("Client", clientSchema);
-
-
+module.exports = mongoose.model('Client', clientSchema);
