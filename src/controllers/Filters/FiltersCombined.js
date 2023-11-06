@@ -19,6 +19,12 @@ const filtersCombined = async (req, res) => {
       filterConditions.profession = req.query.profession;
     }
 
+    if (req.query.workLocation === 'Remoto') {
+      filterConditions.workLocation = req.query.workLocation;
+    } else if (req.query.workLocation === 'Presencial') {
+      filterConditions.workLocation = req.query.workLocation;
+    }
+
     let query = NewAd.find(filterConditions);
 
     if (req.query.sortPrice === 'asc') {
