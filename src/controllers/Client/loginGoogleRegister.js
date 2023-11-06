@@ -1,5 +1,5 @@
-const Client = require("../../models/Client");
-const nodemailer = require("nodemailer");
+const Client = require('../../models/Client');
+const nodemailer = require('nodemailer');
 
 const clientGoogleLogin = async (req, res) => {
   const { email } = req.body;
@@ -10,7 +10,7 @@ const clientGoogleLogin = async (req, res) => {
 
     if (!existingClient) {
       // Extrae la parte del correo electrónico antes del "@" como userName
-      const userName = email.split("@")[0];
+      const userName = email.split('@')[0];
       let newUserName = userName;
       let count = 1;
 
@@ -28,7 +28,7 @@ const clientGoogleLogin = async (req, res) => {
       });
       // Configura el servicio de envío de correos electrónicos
       const transporter = nodemailer.createTransport({
-        service: "Gmail",
+        service: 'Gmail',
         auth: {
           user: process.env.MAIL,
           pass: process.env.PASSWORDMAIL,
@@ -39,29 +39,27 @@ const clientGoogleLogin = async (req, res) => {
       const mailOptions = {
         from: process.env.MAIL,
         to: newClient.email,
-        subject: "Gracias por registrarte",
-        text: "Gracias por registrarte en nuestra aplicación. Ya podes comenzar a disfrutar de nuestros servicios.",
+        subject: 'Gracias por registrarte',
+        text: 'Gracias por registrarte en nuestra aplicación. Ya podes comenzar a disfrutar de nuestros servicios.',
       };
 
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-          console.log("Error al enviar el correo electrónico:", error);
+          console.log('Error al enviar el correo electrónico:', error);
         } else {
-          console.log("Correo electrónico enviado:", info.response);
+          console.log('Correo electrónico enviado:', info.response);
         }
       });
 
-      res
-        .status(200)
-        .json({ message: "Usuario de Google registrado con éxito." });
+      res.status(200).json(newClient);
     } else {
       // Si el usuario ya existe, inicia sesión
-      res.status(200).json({ message: "Inicio de sesión exitoso." });
+      res.status(200).json(existingClient);
     }
   } catch (error) {
     res
       .status(500)
-      .json({ error: "Error en la autenticación de Google.", error });
+      .json({ error: 'Error en la autenticación de Google.', error });
   }
 };
 
