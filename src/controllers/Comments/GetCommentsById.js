@@ -1,20 +1,16 @@
-const Comment = require("../../models/Comment");
+const Comment = require('../../models/Comment');
 
-const getById = async (req, res) => {
+const getComments = async (req, res) => {
   try {
-    const { id } = req.params;
-    const comment = await Comment.findById(id)
-      .populate("client") 
-      .populate("professional") 
+    const comentario = await Comment.find()
+      .populate('Client')
+      .populate('Professional')
       .exec();
-
-    if (!comment) {
-      return res.status(404).json({ error: "Comment not found." });
-    }
-    res.status(200).json(ad);
+    res.status(200).json(comentario);
   } catch (error) {
-    res.status(500).json({ error: "Error getting comment." });
+    console.error(error);
+    res.status(500).json({ error: 'Error retrieving comments' });
   }
 };
 
-module.exports = getById;
+module.exports = getComments;

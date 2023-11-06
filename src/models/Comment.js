@@ -9,21 +9,22 @@ const commentSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  ranking: {
+  rating: {
     type: Number,
     min: 1,
     max: 5,
+    required: true,
   },
   isDeleted: {
     // Inicialmente, no se ha borrado lógicamente
     type: Boolean,
     default: false,
   },
-  client: {
+  Client: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Client',
   },
-  professional: {
+  Professional: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Professional',
   },
