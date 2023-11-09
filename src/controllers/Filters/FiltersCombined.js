@@ -28,9 +28,9 @@ const filtersCombined = async (req, res) => {
     let query = NewAd.find(filterConditions);
 
     if (req.query.sortPrice === 'asc') {
-      query = query.sort({ price: 1 });
-    } else if (req.query.sortPrice === 'desc') {
       query = query.sort({ price: -1 });
+    } else if (req.query.sortPrice === 'desc') {
+      query = query.sort({ price: 1 });
     }
 
     const ads = await query.populate('creator').exec();
