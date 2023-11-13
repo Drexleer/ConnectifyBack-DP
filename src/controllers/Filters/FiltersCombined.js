@@ -34,8 +34,10 @@ const filtersCombined = async (req, res) => {
     }
 
     const ads = await query.populate('creator').exec();
-
-    res.json(ads);
+    const response = ads.filter((ad) => {
+      return !ad.isDeleted && !ad.creator[0].isDeleted;
+    });
+    res.json(response);
   } catch (err) {
     res.status(500).json({ error: 'Error al obtener los anuncios' });
   }
