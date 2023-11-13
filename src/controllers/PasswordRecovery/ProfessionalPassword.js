@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer');
 require('dotenv').config();
 const EmailConnectify = process.env.MAIL;
 const PasswordConnectify = process.env.PASSWORDMAIL;
+const URL = process.env.URL;
 
 // Configuración de nodemailer
 const transporter = nodemailer.createTransport({
@@ -45,7 +46,7 @@ const ProfessionalRequestRecoveryPassword = async (req, res) => {
       html: `
         <p>Hola ${professional.name},</p>
         <p>Has solicitado restablecer tu contraseña en Connectify. Utiliza el siguiente enlace para completar el proceso:</p>
-        <p><a href="http://localhost:5173/reset-password?token=${tokenRecovery}">Restablecer Contraseña</a></p>
+        <p><a href="${URL}/reset-password?token=${tokenRecovery}">Restablecer Contraseña</a></p>
         <p>Este enlace es válido por 1 hora.</p>
         <p>Si no solicitaste este restablecimiento, ignora este correo electrónico.</p>
         <p>Gracias,</p>
@@ -90,12 +91,10 @@ const ProfessionalResetPassword = async (req, res) => {
     professional.expiresIn = null;
     await professional.save();
 
-    res
-      .status(200)
-      .json({
-        message:
-          '¡Contraseña restablecida con éxito! Puedes iniciar sesión con tu nueva contraseña.',
-      });
+    res.status(200).json({
+      message:
+        '¡Contraseña restablecida con éxito! Puedes iniciar sesión con tu nueva contraseña.',
+    });
   } catch (error) {
     console.error('Error al restablecer la contraseña:', error);
     res.status(500).json({ message: 'Error interno del servidor' });
