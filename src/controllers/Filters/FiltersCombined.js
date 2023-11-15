@@ -33,11 +33,7 @@ const filtersCombined = async (req, res) => {
       query = query.sort({ price: -1 });
     }
     const ads = await query.populate('creator').exec();
-    const response = ads.filter((ad) => {
-      return !ad.isDeleted && !ad.creator[0].isDeleted;
-    });
-
-    res.json(response);
+    res.json(ads);
   } catch (err) {
     res.status(500).json({ error: 'Error al obtener los anuncios' });
   }
