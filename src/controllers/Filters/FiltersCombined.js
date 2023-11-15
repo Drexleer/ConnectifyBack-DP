@@ -1,8 +1,8 @@
-const NewAd = require('../../models/NewAd');
-
 const filtersCombined = async (req, res) => {
   try {
-    let filterConditions = {};
+    let filterConditions = {
+      isDeleted: false, // Agrega esta condición para excluir los anuncios eliminados
+    };
 
     if (req.query.location) {
       filterConditions.location = req.query.location;
@@ -32,6 +32,7 @@ const filtersCombined = async (req, res) => {
     } else if (req.query.sortPrice === 'desc') {
       query = query.sort({ price: -1 });
     }
+
     const ads = await query.populate('creator').exec();
     res.json(ads);
   } catch (err) {
