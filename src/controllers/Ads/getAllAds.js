@@ -6,12 +6,16 @@ const getAllAds = async (req, res) => {
       .populate('creator')
       .exec();
 
-    const adsFiltrados = ads.filter((ad) => ad.creator.isDeleted !== true);
-    res.status(200).json(adsFiltrados);
+    // Filtrar los anuncios según la propiedad isDeleted de cada creador
+    const adsFiltrados = ads.filter((ad) =>
+      ad.creator.every((creator) => !creator.isDeleted)
+    );
 
-    res.status(200).json(ads);
+    // Enviar la respuesta solo después de filtrar los anuncios
+    res.status(200).json(adsFiltrados);
   } catch (error) {
-    res.status(500).json({ error: 'Error creating ad.' });
+    // Enviar una respuesta de error si hay algún problema
+    res.status(500).json({ error: 'Error obtaining ads.' });
   }
 };
 
